@@ -1204,7 +1204,89 @@ Merci de votre collaboration !
 
 Souhaitez-tu aussi que je te propose un badge CI, un sommaire automatique ou une version anglaise de ce `README` pour une communauté plus large ? 😄
 
-##### **prompt**
+##### **prompt** Comment utiliser le framework bulma dans notre dev je veux dire télécharger la dérnière version de bulma et on la place dans le dossier `assets`
+
+Voici comment intégrer **Bulma** manuellement dans ton projet en téléchargeant la dernière version et en la plaçant dans un dossier `assets` :
+
+---
+
+## 📦 1. Télécharger la dernière version de Bulma
+
+La version actuelle de Bulma est **`1.0.4`**.
+
+- Va sur la page officielle de téléchargement : [bulma.io](https://bulma.io/)
+- Ou télécharge directement l’archive ZIP depuis GitHub : [bulma-1.0.4.zip](https://github.com/jgthms/bulma/releases)
+
+Une fois téléchargée, **extrais le fichier `bulma.css`** (ou `bulma.min.css`) depuis le dossier `/css/`.
+
+---
+
+## 📁 2. Placer Bulma dans ton projet
+
+Organise ton projet comme ceci :
+
+```
+react-js-dev/
+├─ assets/
+│  └─ css/
+│     └─ bulma.min.css
+├─ index.html
+├─ src/
+│  └─ ...
+```
+
+---
+
+## 🧩 3. Lier Bulma dans `index.html`
+
+Ajoute cette ligne dans la balise `<head>` de ton `index.html` :
+
+```html
+<link rel="stylesheet" href="/assets/css/bulma.min.css" />
+```
+
+> ✅ Assure-toi que le chemin est correct par rapport à la racine du projet (où se trouve `index.html`).
+
+---
+
+## 🧪 4. Tester avec un composant Bulma
+
+Dans ton fichier `App.jsx`, ajoute un exemple :
+
+```jsx
+export default function App() {
+  return (
+    <section className="section">
+      <div className="container">
+        <h1 className="title">Hello Bulma 👋</h1>
+        <p className="subtitle">Avec React + Vite + Biome</p>
+      </div>
+    </section>
+  );
+}
+```
+
+---
+
+## 🧠 Astuce bonus : ne pas utiliser npm pour Bulma ?
+
+Tu peux aussi installer Bulma via npm si tu préfères :
+
+```bash
+npm install bulma
+```
+
+Puis dans ton fichier `main.jsx` :
+
+```js
+import 'bulma/css/bulma.min.css';
+```
+
+Mais comme tu veux le faire **manuellement**, la méthode avec `/assets/` est parfaite pour garder le contrôle.
+
+---
+
+Tu veux que je t’aide à créer un thème personnalisé Bulma ou à combiner avec Tailwind ou Biome ? Je peux t’aider à mixer tout ça proprement 😄
 
 ##### **prompt**
 
