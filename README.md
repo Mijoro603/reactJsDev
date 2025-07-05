@@ -1,8 +1,9 @@
 # reactJsDev
 
-Développement application front end avec reactjs
+Développement application front end avec reactjs + vitejs + Biomejs
 
-[Cousin le Génie](https://copilot.microsoft.com/chats/PdqRrmdJ8CN3qf9SvZNFJ)
+- [Support IA Copilot](https://copilot.microsoft.com/chats/PdqRrmdJ8CN3qf9SvZNFJ)
+- [Documentation et tutoriels pour github via CodeSandbox](https://code.visualstudio.com/docs/sourcecontrol/overview)
 
 ##### **prompt** J'ai créé un repository pour faire un reactjs avec biomejs et quand j'installe sur codesandbox alors il y a des erreurs `➜ workspace git:(main) npm install -g create-react-app npm WARN deprecated uid-number@0.0.6: This package is no longer supported. npm WARN deprecated inflight@1.0.6: This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested way to coalesce async requests by a key value, which is much more comprehensive and powerful. npm WARN deprecated rimraf@2.7.1: Rimraf versions prior to v4 are no longer supported npm WARN deprecated fstream-ignore@1.0.5: This package is no longer supported. npm WARN deprecated glob@7.2.3: Glob versions prior to v9 are no longer supported npm WARN deprecated fstream@1.0.12: This package is no longer supported. npm WARN deprecated tar@2.2.2: This version of tar is no longer supported, and will not receive security updates. Please upgrade asap. added 64 packages in 2s 4 packages are looking for funding run `npm fund` for details npm notice npm notice New major version of npm available! 10.5.0 -> 11.4.2 npm notice Changelog: https://github.com/npm/cli/releases/tag/v11.4.2 npm notice Run npm install -g npm@11.4.2 to update! npm notice ➜ workspace git:(main)`. Expliquer en détails les erreurs svp
 
@@ -133,7 +134,7 @@ react-biome-app/
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title>React + Biome</title>
+    <title>React + Vite + Biome</title>
   </head>
   <body>
     <div id="root"></div>
@@ -160,7 +161,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
 
 ```jsx
 export default function App() {
-  return <h1>Hello React + Biome 👋</h1>;
+  return <h1>Hello React + Vite + Biome 👋</h1>;
 }
 ```
 
@@ -408,13 +409,323 @@ export default defineConfig({
 
 Tu veux que je t’aide à ajouter TypeScript, des tests avec Vitest ou une config GitHub Actions ensuite ? Je suis prêt 😄
 
-##### **prompt**
+##### **prompt** Comment configurer `vite.config.js` avec `https://p4y6s6-5173.csb.app` tel que quand je fais `npm run dev` alors par défaut il affiche `http://localhost:5173`
 
-##### **prompt**
+Pour que Vite affiche une **URL personnalisée ou externe** comme `https://p4y6s6-5173.csb.app`, il faut bien comprendre ce que fait réellement `npm run dev` :
 
-##### **prompt**
+---
 
-##### **prompt**
+## ⚙️ 1. Comportement par défaut de Vite
+
+Quand tu exécutes :
+
+```bash
+npm run dev
+```
+
+Vite lance un serveur de développement **local**, qui s’exécute sur `http://localhost:5173` (ou un autre port si déjà utilisé). Cela signifie qu’il **ne peut pas afficher directement un domaine externe** comme `https://p4y6s6-5173.csb.app`, sauf si :
+
+- Tu es dans un environnement cloud (comme CodeSandbox) qui **mappe automatiquement `localhost:5173` vers cette URL externe**.
+- Ou bien tu forces Vite à écouter sur `0.0.0.0` pour le rendre accessible depuis l’extérieur (dans certains cas seulement, selon l’environnement).
+
+---
+
+## 🛠️ 2. Configuration de `vite.config.js` pour l’accès externe
+
+Ajoute cette configuration au fichier `vite.config.js` :
+
+```js
+// vite.config.js
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
+
+export default defineConfig({
+  plugins: [react()],
+  server: {
+    host: "0.0.0.0",
+    port: 5173,
+  },
+});
+```
+
+### 🔍 Explication :
+
+- `host: '0.0.0.0'` : permet d’accéder au serveur depuis l’extérieur (pas uniquement `localhost`).
+- `port: 5173` : fixe le port explicitement (optionnel, mais utile pour cohérence).
+
+---
+
+## 🧪 3. Comportement sur CodeSandbox
+
+Si tu es sur [CodeSandbox](https://codesandbox.io), la plateforme :
+
+- **détecte automatiquement `localhost:5173`**
+- et te génère une URL externe **comme `https://xxxxxx-5173.csb.app`** qui pointe vers ton projet local.
+
+> Tu n’as **pas besoin de changer l’URL manuellement**, c’est CodeSandbox qui s’en occupe.
+
+---
+
+## 📝 4. Astuce bonus : afficher l’URL externe automatiquement
+
+Tu peux ajouter un script `postdev` pour que l’URL externe s’affiche après lancement (utile localement) :
+
+```json
+"scripts": {
+  "dev": "vite",
+  "postdev": "echo 'Si vous êtes sur CodeSandbox, visitez https://p4y6s6-5173.csb.app'"
+}
+```
+
+---
+
+Souhaites-tu que je génère un `vite.config.js` complet prêt à copier/coller pour ton projet ? 😊
+
+##### **prompt** Intégration automatique de BiomeJS dans mon éditeur vscode tel que explique et ajouter s'il y a des manques pour l'automatisation sur mon code suivant `{ "$schema": "https://biomejs.dev/schemas/2.0.5/schema.json", "files": { "ignoreUnknown": false }, "formatter": { "enabled": true, "indentStyle": "space", "indentWidth": 2 }, "linter": { "enabled": true, "rules": { "recommended": true, "correctness": { "noUnusedImports": "error", "noUnusedVariables": "error", "useExhaustiveDependencies": "warn" } } }, "javascript": { "formatter": { "quoteStyle": "double" } }, "assist": { "enabled": true, "actions": { "source": { "organizeImports": "on" } } } } ` tel que `/* .vscode > settings.json */ { "editor.codeActionsOnSave": { "quickfix.biome": "explicit", "source.organizeImports.biome": "explicit", "source.fixAll.biome": "explicit" }, "editor.defaultFormatter": "biomejs.biome", "editor.formatOnSave": true }` à corriger aussi les 2 svp
+
+Parfait, tu es déjà très bien avancé dans ta configuration BiomeJS avec VS Code 👏. Je vais t’aider à peaufiner ça pour que ce soit **fluide, automatique et stable**. Voici une version **corrigée et améliorée** de ta configuration dans les deux fichiers :
+
+---
+
+## ✅ `biome.json` corrigé et complet
+
+```json
+{
+  "$schema": "https://biomejs.dev/schemas/2.0.5/schema.json",
+  "files": {
+    "ignoreUnknown": false,
+    "include": ["src"],
+    "exclude": ["node_modules"]
+  },
+  "formatter": {
+    "enabled": true,
+    "indentStyle": "space",
+    "indentWidth": 2,
+    "lineWidth": 100,
+    "quoteStyle": "double"
+  },
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "recommended": true,
+      "correctness": {
+        "noUnusedImports": "error",
+        "noUnusedVariables": "error",
+        "useExhaustiveDependencies": "warn"
+      }
+    }
+  },
+  "assist": {
+    "enabled": true,
+    "actions": {
+      "source": {
+        "organizeImports": "on"
+      }
+    }
+  }
+}
+```
+
+### 🛠️ Changements utiles :
+- Ajout de `include` et `exclude` dans `files` pour une meilleure portée.
+- Fusion des options `formatter.quoteStyle` dans le bloc `formatter` global (plus clair).
+- Optionnel : `lineWidth` ajouté pour fixer les longueurs de lignes.
+
+---
+
+## ✅ `.vscode/settings.json` recommandé
+
+```json
+{
+  "editor.defaultFormatter": "biomejs.biome",
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.biome": true,
+    "source.organizeImports.biome": true
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  }
+}
+```
+
+### ✅ Corrections importantes :
+- Remplacement de `"explicit"` par `true` (la bonne syntaxe recommandée).
+- Ajout du formatteur par langage (`[javascript]`, `[typescript]`) si jamais tu mixes du TS/JS.
+- Activation des fixes automatiques et organisation d’imports **à chaque sauvegarde**.
+
+---
+
+## 🔌 Extension à installer dans VS Code
+
+Assure-toi d’avoir installé l’extension officielle **Biome** dans Visual Studio Code :
+
+🔗 [Biome for VS Code](https://marketplace.visualstudio.com/items?itemName=biomejs.biome)
+
+> Une fois installée, elle détectera automatiquement le fichier `biome.json` à la racine de ton projet.
+
+---
+
+## 📦 En résumé : ce que tu obtiens avec cette config
+
+| Fonction | Automatisé à la sauvegarde |
+|---------|-----------------------------|
+| Formatage de code | ✅ |
+| Organisation des imports | ✅ |
+| Correction de style & erreurs | ✅ |
+| Configuration par langage | ✅ |
+| Support assisté de suggestions | ✅ |
+
+---
+
+Si tu veux aller plus loin, je peux aussi t’aider à **intégrer Biome dans une action GitHub (CI)** ou à **afficher les erreurs en ligne de commande comme dans ESLint**. Tu veux ? 😄
+
+##### **prompt** Corriger `vite.config.js` svp car `Blocked request. This host ("p4y6s6-5173.csb.app") is not allowed. To allow this host, add "p4y6s6-5173.csb.app" to `server.allowedHosts` in vite.config.js.` en configurant `server.allowedHosts` dedans après tu peux m'aider à intégrer Biome dans une action GitHub (CI)
+
+Voici exactement ce qu’il te faut 🔧. D’abord, corrigeons ton fichier `vite.config.js` pour autoriser le domaine `p4y6s6-5173.csb.app` (celui de ton environnement CodeSandbox).
+
+---
+
+## ✅ Fichier `vite.config.js` corrigé
+
+```js
+// vite.config.js
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
+
+export default defineConfig({
+  plugins: [react()],
+  server: {
+    host: '0.0.0.0',
+    port: 5173,
+    strictPort: true,
+    allowedHosts: ['p4y6s6-5173.csb.app']
+  },
+  preview: {
+    port: 4173,
+    strictPort: true
+  },
+  build: {
+    outDir: 'dist',
+    sourcemap: true
+  }
+});
+```
+
+> 🔐 `allowedHosts` sert à **autoriser explicitement un domaine** à accéder à ton serveur de dev. C’est utile dans des environnements comme CodeSandbox, StackBlitz ou GitHub Codespaces.
+
+---
+
+## 🤖 Intégrer Biome dans un workflow GitHub Actions (CI)
+
+Voilà un workflow GitHub Actions minimaliste qui :
+1. Installe les dépendances
+2. Exécute le formatage et le linting avec Biome
+3. Échoue si l’un des deux échoue
+
+### 📄 `.github/workflows/biome-check.yml`
+
+```yaml
+name: Biome Check
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  biome:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout le code
+        uses: actions/checkout@v3
+
+      - name: Installer Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+
+      - name: Installer les dépendances
+        run: npm ci
+
+      - name: Lint avec Biome
+        run: npx @biomejs/biome lint .
+
+      - name: Vérifier le formatage
+        run: npx @biomejs/biome format . --check
+```
+
+---
+
+## 🎯 Astuces pour aller plus loin
+
+- ✅ Tu peux ajouter un badge dans ton `README.md` pour afficher l’état du check Biome.
+- 💬 Tu peux rendre Biome encore plus strict en étendant les règles dans `biome.json`.
+- ⚙️ Pour les PR automatiques, je peux aussi t’aider à créer une action de **fix auto + commit** si les règles échouent.
+
+---
+
+Souhaites-tu qu’on ajoute **TypeScript**, **testing avec Vitest**, ou une **pipeline de build et déploiement** ensuite ? Je peux t’accompagner niveau par niveau 😄
+
+##### **prompt** Récréer mon fichier `index.html` avec les tags qui convienent dont `<!DOCTYPE html> <html lang="en"> <head> <meta charset="UTF-8" /> <title>React + Vite + Biome</title> <link rel="shortcut icon" href="/favicon.ico" type="image/icon /> </head> <body> <div id="root"></div> <script type="module" src="/src/main.jsx"></script> </body> </html> ` dans le dossier `public` avec `html lang="fr"` et `link favicon.ico` et configurer aussi `<meta name="viewport" content="width=device-width, initial-scale=1.0" /> <title>React Vite Biome</title> <meta name="description" content="Plateforme React Vite Biome" /> <meta name="author" content="Mijoro603" /> <meta property="og:title" content="Plateforme React Vite Biome" /> <meta property="og:description" content="Plateforme React Vite Biome" /> <meta property="og:type" content="website" /> <meta property="og:image" content="/favicon.ico" /> <meta name="twitter:card" content="summary_large_image" /> <meta name="twitter:site" content="@RajaonasyRojo" /> <meta name="twitter:image" content="/favicon.ico" />` qui convient avec la documentation officiel de vite qui est '"Une chose que vous avez peut-être remarquée est que dans un projet Vite, index.html est au centre du projet au lieu d'être caché dans public. C'est intentionnel : pendant le développement, Vite est un serveur, et index.html est le point d'entrée de votre application. Vite traite index.html comme du code source et une partie du graphe des modules. Il résout les <script type="module" src="..."> qui font référence à votre code source JavaScript. Même les <script type="module"> en ligne et les CSS référencés via <link href> bénéficient également de fonctionnalités spécifiques à Vite. De plus, les URLs à l'intérieur de index.html sont automatiquement rebasées de sorte qu'il n'est pas nécessaire d'utiliser des espaces réservés %PUBLIC_URL%. Similaire aux serveurs http statiques, Vite a le concept d'un "répertoire racine" à partir duquel vos fichiers sont servis. Vous le verrez référencé comme <root> dans le reste de la documentation. Les URLs absolues dans votre code source seront résolues en utilisant la racine du projet comme base, donc vous pouvez écrire du code comme si vous travailliez avec un serveur de fichiers statique normal (sauf qu'il est beaucoup plus puissant !). Vite est également capable de gérer les dépendances qui se résolvent par des emplacements de système de fichiers hors de la racine, ce qui le rend utilisable même dans une configuration basée sur monorepo. Vite supporte également les applications multi-pages avec plusieurs points d'entrée .html."'
+
+Voici un fichier `index.html` **corrigé et optimisé** pour ton projet **React + Vite + Biome**, en suivant les bonnes pratiques officielles de Vite et en ajoutant les bonnes balises HTML et meta pour le SEO, le responsive design et les aperçus sociaux 👇
+
+---
+
+## ✅ `index.html` (à placer à la racine du projet, **pas dans `public`**)
+
+```html
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>React Vite Biome</title>
+    <meta name="description" content="Plateforme React Vite Biome" />
+    <meta name="author" content="Mijoro603" />
+
+    <!-- Open Graph (Facebook, LinkedIn...) -->
+    <meta property="og:title" content="Plateforme React Vite Biome" />
+    <meta property="og:description" content="Plateforme React Vite Biome" />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="/favicon.ico" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@RajaonasyRojo" />
+    <meta name="twitter:image" content="/favicon.ico" />
+
+    <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
+```
+
+---
+
+### 🔍 Pourquoi ne pas le mettre dans `/public` ?
+
+Vite gère `index.html` comme **point d’entrée source**, pas comme fichier statique. En clair :
+- Il est traité comme un **module HTML**.
+- Le `<script type="module" src="/src/main.jsx" />` est transformé dynamiquement.
+- Il fait **partie du graphe** de dépendances, ce qui est très puissant.
+
+> ⚠️ Tout fichier placé dans `/public` n’est **pas transformé ni optimisé**, donc Vite recommande de garder `index.html` à la racine.
+
+---
+
+Si tu as un favicon ou un logo personnalisé, place-le bien dans `/public/favicon.ico`.
+
+Besoin d’ajouter un manifest, de PWA ou d’intégration SEO plus poussée ? Je suis partant pour t’aider 🌐✨
 
 ##### **prompt**
 

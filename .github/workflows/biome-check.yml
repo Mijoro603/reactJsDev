@@ -1,0 +1,29 @@
+name: Biome Check
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  biome:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout le code
+        uses: actions/checkout@v3
+
+      - name: Installer Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+
+      - name: Installer les dépendances
+        run: npm ci
+
+      - name: Lint avec Biome
+        run: npx @biomejs/biome lint .
+
+      - name: Vérifier le formatage
+        run: npx @biomejs/biome format . --check
