@@ -797,7 +797,108 @@ Puis recharge la page dans le navigateur **avec un cache vidé** :
 
 Si tu veux, je peux te générer un favicon `.ico` valide ou t’aider à le convertir depuis une image PNG. Tu veux qu’on le fasse ? 😊
 
-##### **prompt**
+##### **prompt** Comment combine deux branch tel que `dev` vers `main` si c'est `git merge`je ne sais pas, expliquer moi étape par étape et en détails avec comment faire `git pull` et `git push`qui va le premier et dans quel branch le faire dans Codesandbox
+
+Voici un guide clair et étape par étape pour **fusionner la branche `dev` dans `main`** avec `git`, en utilisant **CodeSandbox** ou tout autre terminal Git :
+
+---
+
+## 🧭 Objectif
+
+Tu veux :  
+✅ Combiner (fusionner) les changements de la branche `dev` vers `main`  
+👉 en utilisant `git merge`  
+👉 et en comprenant quand utiliser `git pull` et `git push`
+
+---
+
+## ⚙️ Étapes détaillées pour faire un `merge` depuis la branche `dev` vers `main`
+
+### 1. ✅ Assure-toi que tous les changements sont enregistrés
+
+Dans **la branche `dev`**, vérifie que tu n’as pas de modifications non enregistrées :
+
+```bash
+git status
+```
+
+Si besoin :
+
+```bash
+git add .
+git commit -m "Enregistre les derniers changements"
+```
+
+---
+
+### 2. 📥 Bascule sur la branche `main` et récupère les dernières mises à jour
+
+```bash
+git checkout main
+git pull origin main
+```
+
+> 🧠 Pourquoi ? On se place sur la branche `main`, et on s’assure qu’elle est **à jour avec le dépôt distant (remote)** avant de fusionner.
+
+---
+
+### 3. 🔀 Fusionne `dev` dans `main`
+
+```bash
+git merge dev
+```
+
+👉 Cela fusionne les changements de `dev` dans `main`.
+
+Si tout se passe bien : il affiche un message de type *"Merge made by the 'recursive' strategy..."*
+
+---
+
+### 4. 📤 Pousse les changements fusionnés sur le dépôt distant
+
+```bash
+git push origin main
+```
+
+> C’est à ce moment-là que les autres (ou CodeSandbox) pourront voir les changements de `dev` intégrés dans `main`.
+
+---
+
+### 📌 Résumé du bon ordre
+
+| Étape | Branche | Commande |
+|-------|---------|----------|
+| 1 | dev (optionnel) | `git commit` |
+| 2 | main | `git checkout main` |
+| 3 | main | `git pull origin main` |
+| 4 | main | `git merge dev` |
+| 5 | main | `git push origin main` |
+
+---
+
+## 🧪 Et si tu veux faire l’inverse (main → dev) ?
+
+Tu switches sur `dev` :
+
+```bash
+git checkout dev
+git pull origin dev
+git merge main
+git push origin dev
+```
+
+---
+
+## 🧼 Astuce : vérifier les branches disponibles
+
+```bash
+git branch          # Voir les branches locales
+git branch -r       # Voir les branches distantes
+```
+
+---
+
+Si tu veux, je peux aussi t’aider à visualiser ça sous forme de schéma ou à résoudre les conflits de fusion s’il y en a ! Tu veux que je te montre ? 😄
 
 ##### **prompt**
 
