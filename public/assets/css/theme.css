@@ -1,0 +1,23 @@
+/* theme.css */
+
+:root {
+  --primary: #4a90e2;
+  --secondary: #ffdd57;
+  --text-color: #363636;
+}
+
+body {
+  color: var(--text-color);
+  font-family: "Helvetica Neue", sans-serif;
+}
+
+/* Override Bulma color */
+.button.is-primary {
+  background-color: var(--primary);
+  border-color: var(--primary);
+}
+
+.button.is-secondary {
+  background-color: var(--secondary);
+  border-color: var(--secondary);
+}

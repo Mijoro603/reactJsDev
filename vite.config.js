@@ -17,8 +17,8 @@ const allowedHosts =
     ? ["h4ngjy-5173.csb.app"]
     : ["localhost"];
 
-console.log(`🌿 Branche Git détectée : ${currentBranch}`);
-console.log(`🔐 allowedHosts : ${JSON.stringify(allowedHosts)}`);
+/* console.log(`🌿 Branche Git détectée : ${currentBranch}`);
+console.log(`🔐 allowedHosts : ${JSON.stringify(allowedHosts)}`); */
 
 export default defineConfig({
   plugins: [react()],
