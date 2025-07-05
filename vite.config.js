@@ -15,7 +15,7 @@ const allowedHosts =
     ? ["p4y6s6-5173.csb.app"]
     : currentBranch === "dev"
     ? ["h4ngjy-5173.csb.app"]
-    : [];
+    : ["localhost"];
 
 console.log(`🌿 Branche Git détectée : ${currentBranch}`);
 console.log(`🔐 allowedHosts : ${JSON.stringify(allowedHosts)}`);
