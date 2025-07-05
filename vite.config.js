@@ -8,7 +8,8 @@ export default defineConfig({
     port: 5173, // Port par défaut de Vite
     strictPort: true, // Évite que Vite change de port automatiquement
     open: false, // Ne pas ouvrir automatiquement dans le navigateur
-    allowedHosts: ["p4y6s6-5173.csb.app"],
+    // allowedHosts: ["p4y6s6-5173.csb.app"], // main
+    allowedHosts: ["h4ngjy-5173.csb.app"], // dev
   },
   preview: {
     port: 4173,
